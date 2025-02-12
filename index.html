@@ -107,7 +107,7 @@
         }
 
         function showPleaseMessages(count) {
-            if (count < 4) {
+            if (count < 3) {
                 showPopup("Please 🥺", [
                     { text: "Yes 💖", class: "yes", action: () => showPopup("Yayy!!! I love you ❤️", [{ text: "OK", action: closePopup }]) },
                     { text: "No 💔", class: "no", action: () => hideThenShowPlease(count + 1) }
