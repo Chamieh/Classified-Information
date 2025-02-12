@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classified Information</title>
+    <style>
+        /* Styling for the popup */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            z-index: 1000;
+        }
+
+        .popup button {
+            margin: 10px;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .popup button.yes {
+            background: green;
+            color: white;
+        }
+
+        .popup button.no {
+            background: red;
+            color: white;
+        }
+
+        /* Background overlay */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Popup Structure -->
+    <div class="overlay" id="overlay"></div>
+    <div class="popup" id="popup">
+        <p id="popupText"></p>
+        <div id="popupButtons"></div>
+    </div>
+
+    <script>
+        function showPopup(message, buttons = []) {
+            document.getElementById("popupText").innerText = message;
+            let buttonContainer = document.getElementById("popupButtons");
+            buttonContainer.innerHTML = "";
+
+            buttons.forEach(button => {
+                let btn = document.createElement("button");
+                btn.innerText = button.text;
+                btn.className = button.class || "";
+                btn.onclick = button.action;
+                buttonContainer.appendChild(btn);
+            });
+
+            document.getElementById("popup").style.display = "block";
+            document.getElementById("overlay").style.display = "block";
+        }
+
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+            document.getElementById("overlay").style.display = "none";
+        }
+
+        function startPrank() {
+            showPopup("Your PC has been hacked. LOL.", [{
+                text: "OK", action: () => showPopup("However, I just have one question...", [{
+                    text: "OK", action: askValentine
+                }])
+            }]);
+        }
+
+        function askValentine() {
+            showPopup("Would you be my Valentine?", [
+                { text: "Yes 💖", class: "yes", action: () => showPopup("Yayy!!! I love you ❤️", [{ text: "OK", action: closePopup }]) },
+                { text: "No 💔", class: "no", action: () => hideThenShowPlease(0) }
+            ]);
+        }
+
+        function hideThenShowPlease(count) {
+            closePopup(); // Hide the popup
+
+            setTimeout(() => {
+                showPleaseMessages(count);
+            }, 400); // Wait 1 second before showing the next "Please 🥺"
+        }
+
+        function showPleaseMessages(count) {
+            if (count < 5) {
+                showPopup("Please 🥺", [
+                    { text: "Yes 💖", class: "yes", action: () => showPopup("Yayy!!! I love you ❤️", [{ text: "OK", action: closePopup }]) },
+                    { text: "No 💔", class: "no", action: () => hideThenShowPlease(count + 1) }
+                ]);
+            } else {
+                showPopup("Fuck you. 😤", [{ text: "OK", action: closePopup }]);
+            }
+        }
+
+        window.onload = startPrank;
+    </script>
+
+</body>
+</html>
