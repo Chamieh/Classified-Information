@@ -8,7 +8,6 @@
         /* Responsive Background Image */
         body {
             font-family: 'Arial', sans-serif;
-            background-image: url('pic1.jpg'); /* Replace with your image */
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -130,7 +129,40 @@
     </div>
 
     <script>
+	
+		function changeBackground() {
+            let images = [
+                "pic1.jpg",
+                "pic2.jpg",
+                "pic3.jpg",
+                "pic4.jpg",
+                "pic5.jpg",
+                "pic6.jpg",
+                "pic7.jpg",
+                "pic8.jpg",
+                "pic9.jpg",
+                "pic10.jpg",
+                "pic11.jpg",
+                "pic12.jpg",
+                "pic13.jpg",
+                "pic14.jpg",
+                "pic15.jpg",
+                "pic16.jpg"
+            ]; // Add your images here
+
+            let randomIndex = Math.floor(Math.random() * images.length);
+            let randomImage = images[randomIndex];
+
+            document.body.style.backgroundImage = "url('" + randomImage + "')";
+        }
+
+        // Run function on page load
+        window.onload = function() {
+            changeBackground();
+        };
+		
         function showLoveMessage() {
+			changeBackground();
             let messages =  [
                 "I love you because you always make me laugh, even when I don’t feel like smiling.💖",
                 "I love how you listen to me and truly hear what I’m saying.💖",
