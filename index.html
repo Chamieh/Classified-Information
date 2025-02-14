@@ -3,121 +3,220 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Classified Information</title>
+    <title>Love Reminder</title>
     <style>
-        /* Styling for the popup */
-        .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            z-index: 1000;
+        /* Background Image */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('your-image.jpg'); /* Replace with your image */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+            background-blend-mode: overlay;
         }
 
-        .popup button {
-            margin: 10px;
-            padding: 10px;
+        h1 {
+            color: white;
+            font-size: 32px;
+            text-shadow: 2px 2px 5px black;
+        }
+
+        /* Button Style */
+        .btn {
+            background-color: #ff4d79;
+            color: white;
+            padding: 12px 20px;
+            font-size: 18px;
             border: none;
+            border-radius: 8px;
             cursor: pointer;
-            border-radius: 5px;
+            margin-top: 20px;
+            transition: 0.3s;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
         }
 
-        .popup button.yes {
-            background: green;
-            color: white;
+        .btn:hover {
+            background-color: #cc2e5a;
         }
 
-        .popup button.no {
-            background: red;
-            color: white;
-        }
-
-        /* Background overlay */
-        .overlay {
+        /* Modal Styles */
+        .modal {
             display: none;
             position: fixed;
-            top: 0;
+            z-index: 100;
             left: 0;
+            top: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            width: 60%;
+            max-width: 400px;
+            margin: 15% auto;
+            position: relative;
+            animation: fadeIn 0.5s ease-in-out;
+            box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Close Button */
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #d6336c;
+        }
+
+        .close:hover {
+            color: black;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
     </style>
 </head>
 <body>
 
-    <!-- Popup Structure -->
-    <div class="overlay" id="overlay"></div>
-    <div class="popup" id="popup">
-        <p id="popupText"></p>
-        <div id="popupButtons"></div>
+    <h1>💖 Click the Button for a Reminder of Why I Love You 💖</h1>
+    <button class="btn" onclick="showLoveMessage()">Click Me!</button>
+
+    <!-- Modal Structure -->
+    <div id="loveModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <p id="loveMessage">Loading...</p>
+        </div>
     </div>
 
     <script>
-        function showPopup(message, buttons = []) {
-            document.getElementById("popupText").innerText = message;
-            let buttonContainer = document.getElementById("popupButtons");
-            buttonContainer.innerHTML = "";
+        function showLoveMessage() {
+            let messages = [
+                "I love you because you always make me laugh, even when I don’t feel like smiling.💖",
+                "I love how you listen to me and truly hear what I’m saying.💖",
+                "I love the way you look at me—it makes me feel safe and loved.💖",
+                "I love that I can be my true self with you without any fear.💖",
+                "I love that you never judge me, no matter what.💖",
+                "I love the way you say my name—it sounds special when you say it.💖",
+                "I love how your love has made me a stronger person.💖",
+                "I love that I can trust you with my deepest secrets.💖",
+                "I love how you make me feel like the most important person in the world.💖",
+                "I love that you always support my dreams and push me to be better.💖",
+                "I love how you hold my hand—it makes me feel like I belong with you.💖",
+                "I love how we can just sit in silence and still enjoy the moment.💖",
+                "I love the way you make me feel safe when I’m with you.💖",
+                "I love your laugh—it’s one of my favorite sounds.💖",
+                "I love how I can talk to you about anything and everything.💖",
+                "I love that you are my biggest supporter.💖",
+                "I love that you always notice when something is wrong.💖",
+                "I love how you comfort me when I’m feeling down.💖",
+                "I love the way you hug me—it’s my favorite place to be.💖",
+                "I love that you always know what to say to make me feel better.💖",
+                "I love how you inspire me to be a better person.💖",
+                "I love how passionate you are about the things you love.💖",
+                "I love how passionate you are about your job.💖",
+                "I love that we can be silly together and never feel embarrassed.💖",
+                "I love how you challenge me in the best ways possible.💖",
+                "I love that you believe in me, even when I doubt myself.💖",
+                "I love that you never make me feel alone, even when we’re apart.💖",
+                "I love how we can have fun doing absolutely nothing.💖",
+                "I love how you make me feel beautiful just by the way you look at me.💖",
+                "I love that you always try to understand me, even when I don’t make sense.💖",
+                "I love that I feel at home whenever I’m with you.💖",
+                "I love that you always remind me how much I mean to you.💖",
+                "I love how patient you are with me, even when I overthink.💖",
+                "I love the way you motivate me and push me forward.💖",
+                "I love how we can talk for hours and never get bored.💖",
+                "I love how I can see the love in your eyes.💖",
+                "I love that you always reassure me when I need it most.💖",
+                "I love the way you hold me close, like you never want to let go.💖",
+                "I love that we have our own little inside jokes.💖",
+                "I love that you make my heart race and feel calm at the same time.💖",
+                "I love you for being YOU—because you are perfect to me.💖",
+                "I love how thoughtful you are with your words and actions.💖",
+                "I love that no matter what happens, you’re always there for me.💖",
+                "I love how you always remind me that I’m beautiful.💖",
+                "I love how every time we say goodbye, I already miss you.💖",
+                "I love that even when we’re apart, I can feel your love.💖",
+                "I love how excited you get when talking about things you love.💖",
+                "I love that you bring out the best in me.💖",
+                "I love that no matter how much time passes, I still fall for you every day.💖",
+                "I love that I never feel alone because I have you.💖",
+                "I love that you make even bad days feel okay.💖",
+                "I love that you are my forever. 💖",
+                "I love that you make me feel loved beyond words.💖",
+                "I love your determination - it's inspiring. 💖",
+                "I love your sens of humor - it always brightens my day. 💖",
+                "I love your confidence, it's real magnet, so attractive. 💖",
+                "I love your unique way of looking at things- it's refreshing. 💖",
+                "I love your kidness towards other - it's admirable. 💖",
+                "I love how you make my heart feel full every time I’m with you.💖",
+                "I love how you never let me feel alone in anything.💖",
+                "I love that I can be completely vulnerable with you and still feel safe.💖",
+                "I love the way you kiss my forehead—it melts my heart.💖",
+                "I love the way your voice makes me feel at peace.💖",
+                "I love that you believe in me, even when I don’t. 💖",
+                "I love how we can communicate with just a look. 💖",
+                "I love how we always end up laughing at the most random things. 💖",
+                "I love that no matter what, I know I can always count on you.💖",
+                "I love how your love gives me strength every day.💖",
+                "I love that you are my best friend and my greatest love. 💖",
+                "I love the way you kiss me like it’s the first time, every time. 💖",
+                "I love the way you text me good morning—it makes my whole day better.💖",
+                "I love how you get excited about the smallest things. 💖",
+                "I love the way you make time slow down when we're together. 💖",
+                "I love how you randomly send me cute messages just to make me smile. 💖",
+                "I love how you tease me but never cross the line. 💖",
+                "I love how you challenge me to be better, but always accept me as I am. 💖",
+                "I love how you talk about our future together. 💖",
+                "I love how you always notice the things I try to hide. 💖",
+                "I love how you always notice the things I try to hide.💖",
+                "I love how you send me random memes just to make me laugh. 💖",
+                "I love how you always wait for me, even when I take forever to get ready. 💖",
+                "I love that I can be completely weird around you and you love me more for it. 💖",
+                "I love how you never get tired of telling me you love me.💖",
+                "I love how you never get bored of spending time with me.💖",
+                "I love that I can trust you with my heart completely. 💖",
+                "I love you simply because you are you. 💖",
+                "I love the way you tilt your head when you're trying to understand something.💖",
+                "I love the way your hand fits perfectly in mine.💖",
+                "I love that you call me just to hear my voice.💖",
+                "I love how you always offer me your jacket when I’m cold.💖",
+                "I love how you always make me feel welcome in your world.💖",
+                "I love that you make an effort with my family and friends.💖",
+                "I love how your presence alone makes me feel safe.💖",
+                "I love how you appreciate the little things I do.💖",
+                "I love how your touch makes my heart race.💖",
+                "I love that no matter what happens, I know we’ll always have each other. 💖",
+            ];
 
-            buttons.forEach(button => {
-                let btn = document.createElement("button");
-                btn.innerText = button.text;
-                btn.className = button.class || "";
-                btn.onclick = button.action;
-                buttonContainer.appendChild(btn);
-            });
+            let randomIndex = Math.floor(Math.random() * messages.length);
+            let randomMessage = messages[randomIndex];
 
-            document.getElementById("popup").style.display = "block";
-            document.getElementById("overlay").style.display = "block";
+            document.getElementById("loveMessage").innerText = randomMessage;
+            document.getElementById("loveModal").style.display = "block";
         }
 
-        function closePopup() {
-            document.getElementById("popup").style.display = "none";
-            document.getElementById("overlay").style.display = "none";
+        function closeModal() {
+            document.getElementById("loveModal").style.display = "none";
         }
-
-        function startPrank() {
-            showPopup("You've been hacked. LOL.", [{
-                text: "OK", action: () => showPopup("However, I just have one question...", [{
-                    text: "OK", action: askValentine
-                }])
-            }]);
-        }
-
-        function askValentine() {
-            showPopup("Would you be my Valentine?", [
-                { text: "Yes 💖", class: "yes", action: () => showPopup("Yayy!!! I love you ❤️", [{ text: "OK", action: closePopup }]) },
-                { text: "No 💔", class: "no", action: () => hideThenShowPlease(0) }
-            ]);
-        }
-
-        function hideThenShowPlease(count) {
-            closePopup(); // Hide the popup
-
-            setTimeout(() => {
-                showPleaseMessages(count);
-            }, 250); // Wait 1 second before showing the next "Please 🥺"
-        }
-
-        function showPleaseMessages(count) {
-            if (count < 2) {
-                showPopup("Please 🥺", [
-                    { text: "Yes 💖", class: "yes", action: () => showPopup("Yayy!!! I love you ❤️", [{ text: "OK", action: closePopup }]) },
-                    { text: "No 💔", class: "no", action: () => hideThenShowPlease(count + 1) }
-                ]);
-            } else {
-                showPopup("Fuck you. 😤", [{ text: "OK", action: closePopup }]);
-            }
-        }
-
-        window.onload = startPrank;
     </script>
 
 </body>
